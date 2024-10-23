@@ -57,7 +57,11 @@ export default function Home() {
           className="w-full md:w-1/3 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
-        <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)} className="w-1/4 p-2 border border-gray-300 rounded-lg">
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-1/4 p-2 border border-gray-300 rounded-lg"
+        >
           <option value="">Tüm Kategoriler</option>
           <option value="electronics">Elektronik</option>
           <option value="jewelery">Takı</option>
@@ -80,19 +84,25 @@ export default function Home() {
           className="p-2 border border-gray-300 rounded-lg"
         />
 
-        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")} className="w-1/4 p-2 border border-gray-300 rounded-lg">
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}
+          className="w-1/4 p-2 border border-gray-300 rounded-lg"
+        >
           <option value="asc">Puan Artan</option>
           <option value="desc">Puan Azalan</option>
         </select>
       </div>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
+        {sortedProducts.map((product) => (
           <li key={product.id} className="border rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
             <img src={product.image} alt={product.title} className="w-full h-48 object-cover rounded-lg mb-4" />
             <h2 className="text-lg font-semibold mb-2">{product.title}</h2>
             <p className="text-gray-500 font-medium">{product.price}₺</p>
-            <p className="text-yellow-500 font-medium">Rating: {product.rating.rate} ({product.rating.count} oy)</p>
+            <p className="text-yellow-500 font-medium">
+              Rating: {product.rating.rate} ({product.rating.count} oy)
+            </p>
           </li>
         ))}
       </ul>

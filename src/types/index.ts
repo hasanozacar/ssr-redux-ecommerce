@@ -13,3 +13,11 @@ export interface Product {
 export interface ErrorProps {
   message: string;
 }
+export interface ProductsState {
+  entities: {
+    products: { [key: string]: Product };
+  };
+  ids: number[];
+  loading: boolean;
+  error: string | null;
+}
