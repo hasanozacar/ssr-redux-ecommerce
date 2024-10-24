@@ -19,6 +19,8 @@ export default function Home() {
   const [minPrice, setMinPrice] = useState<number | "">("");
   const [maxPrice, setMaxPrice] = useState<number | "">("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [currentPage, setCurrentPage] = useState(1); // Sayfa durumu
+  const productsPerPage = 8;
   //#endregion
 
   useEffect(() => {
@@ -42,6 +44,18 @@ export default function Home() {
       return b.rating.rate - a.rating.rate; // Azalan sıraya göre sıralama
     }
   });
+
+  //pagination
+  const totalProducts = sortedProducts.length; 
+  const totalPages = Math.ceil(totalProducts / productsPerPage); 
+
+  // Şu anki sayfadaki ürünleri al
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = sortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
+
   if (loading) return <Loading />;
   if (error) return <Error message={error} />;
 
@@ -95,7 +109,7 @@ export default function Home() {
       </div>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {sortedProducts.map((product) => (
+        {currentProducts.map((product) => (
           <li key={product.id} className="border rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
             <img src={product.image} alt={product.title} className="w-full h-48 object-cover rounded-lg mb-4" />
             <h2 className="text-lg font-semibold mb-2">{product.title}</h2>
@@ -106,6 +120,19 @@ export default function Home() {
           </li>
         ))}
       </ul>
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            className={`mx-1 p-2 rounded-lg ${
+              currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300'
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
