@@ -26,7 +26,11 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchProducts());
+
   }, [dispatch]);
+  useEffect(() => {
+    console.log(products); // Ürünlerin doğru geldiğinden emin olun
+  }, [products]);
 
   //  Filtering operations are optimized with useMemo
   const filteredProducts = useMemo(() => {
@@ -41,8 +45,12 @@ export default function Home() {
 
   // Sorting  operations are optimized with useMemo
   const sortedProducts = useMemo(() => {
-    return filteredProducts.sort((a, b) => {
-      return sortOrder === "asc" ? a.rating.rate - b.rating.rate : b.rating.rate - a.rating.rate;
+    const productsCopy = [...filteredProducts]; 
+    return productsCopy.sort((a, b) => {
+      const rateA = a?.rating?.rate || 0;
+      const rateB = b?.rating?.rate || 0;
+  
+      return sortOrder === "asc" ? rateA - rateB : rateB - rateA;
     });
   }, [filteredProducts, sortOrder]);
 
