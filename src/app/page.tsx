@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../store/index";
 import Loading from "@/components/Loading";
 import Error from "@/components/Error";
 import Head from "next/head";
+import Link from "next/link";
 //#endregion
 
 export default function Home() {
@@ -28,9 +29,6 @@ export default function Home() {
     dispatch(fetchProducts());
 
   }, [dispatch]);
-  useEffect(() => {
-    console.log(products); // Ürünlerin doğru geldiğinden emin olun
-  }, [products]);
 
   //  Filtering operations are optimized with useMemo
   const filteredProducts = useMemo(() => {
@@ -128,7 +126,8 @@ export default function Home() {
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {currentProducts.map((product) => (
             <li key={product.id} className="border rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
-              <img
+              <Link href={`/products/${product.id}`} prefetch={false}>
+               <img
                 src={product.image}
                 alt={product.title}
                 loading="lazy"  // Lazily Loading Images:
@@ -139,6 +138,8 @@ export default function Home() {
               <p className="text-yellow-500 font-medium">
                 Rating: {product.rating.rate} ({product.rating.count} oy)
               </p>
+               </Link>
+
             </li>
           ))}
         </ul>
