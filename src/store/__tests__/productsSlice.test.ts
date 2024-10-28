@@ -1,9 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import productsReducer, { fetchProducts } from '../slices/products';
-import { Product } from '../../types';
 
 describe('productsSlice', () => {
-  let store: any;
+  let store: ReturnType<typeof configureStore>;
 
   beforeEach(() => {
     store = configureStore({

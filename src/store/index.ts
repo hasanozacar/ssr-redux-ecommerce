@@ -9,7 +9,7 @@ import { Middleware } from "redux";
 const logger = createLogger();
 
 // Example Middleware
-const apiMiddleware: Middleware = (store) => (next) => (action) => {
+const apiMiddleware: Middleware = () => (next) => (action) => {
   console.log("API action dispatched:", action);
   return next(action); // Action'ı bir sonraki middleware'e geç
 };
